@@ -62,7 +62,8 @@ async function fetchAIResponse(userText) {
         });
 
         if (!response.ok) {
-            throw new Error(`Server responded with ${response.status}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.reply || `Server responded with ${response.status}`);
         }
 
         const data = await response.json();
@@ -70,7 +71,7 @@ async function fetchAIResponse(userText) {
 
     } catch (err) {
         console.error("Error communicating with AI backend:", err);
-        addMessage("I am having trouble connecting to my local models right now. Please ensure the backend server and Ollama are running.", 'ai');
+        addMessage(err.message || "I am having trouble connecting to the AI right now. Please try again later.", 'ai');
     }
 }
 

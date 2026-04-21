@@ -7,8 +7,6 @@ const { GoogleGenAI } = require('@google/genai');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Update this to match your local Ollama 'gemma' model name. 
-const OLLAMA_MODEL_NAME = 'gemma';
 
 app.use(cors());
 app.use(bodyParser.json());
