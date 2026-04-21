@@ -12,7 +12,12 @@ const OLLAMA_MODEL_NAME = 'gemma';
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '/')));
+app.use(express.static(__dirname));
+
+// Serve index.html explicitly
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // --- In-Memory Database ---
 let candidates = [];
