@@ -103,7 +103,9 @@ app.post('/api/chat', async (req, res) => {
 
         } catch (geminiErr) {
             console.error("Gemini Error:", geminiErr);
-            return res.status(500).json({ reply: "Critical Error: Gemini API is unavailable right now." });
+            // Return the actual error message to help debug
+            const errorMessage = geminiErr.message || geminiErr.toString() || "Unknown Gemini Error";
+            return res.status(500).json({ reply: `Gemini API Error: ${errorMessage}` });
         }
     } catch (error) {
         console.error("Backend Error:", error);
