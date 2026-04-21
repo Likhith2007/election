@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -88,7 +89,7 @@ app.post('/api/chat', async (req, res) => {
             const ai = new GoogleGenAI({ apiKey });
 
             const response = await ai.models.generateContent({
-                model: 'gemini-1.0-pro', // ✅ supported model
+                model: 'gemini-2.5-pro', // Updated to 2.5 Pro as requested
                 contents: [
                     { role: 'user', parts: [{ text: userMessage }] }
                 ],
