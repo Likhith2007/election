@@ -84,10 +84,14 @@ app.post('/api/chat', async (req, res) => {
 
         console.log(`Received user message: ${userMessage}`);
 
-        const hardcodedKey = "AIzaSyCV2m5E-vUL5dUVwfHJlJL2koD7pfdNaYc";
+        const apiKey = process.env.GEMINI_API_KEY;
+        
+        if (!apiKey) {
+            return res.status(500).json({ reply: "Gemini API Error: Server is missing GEMINI_API_KEY environment variable." });
+        }
 
         try {
-            const ai = new GoogleGenAI({ apiKey: hardcodedKey });
+            const ai = new GoogleGenAI({ apiKey });
 
             const response = await ai.models.generateContent({
                 model: 'gemini-2.5-flash',
