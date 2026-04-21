@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicGuide - Election Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-check-to-slot"></i>
+                <span>CivicGuide</span>
+            </div>
+            <nav id="sidebar-nav">
+                <a href="#" class="nav-link active" data-page="timeline-page"><i class="fa-solid fa-map"></i> Election
+                    Timeline</a>
+                <a href="#" class="nav-link" data-page="voting-page"><i class="fa-solid fa-person-booth"></i> Voting
+                    Booth</a>
+                <a href="#" class="nav-link" data-page="voterid-page"><i class="fa-solid fa-address-card"></i> Voter ID
+                    Info</a>
+                <a href="#" class="nav-link" data-page="candidates-page"><i class="fa-solid fa-landmark"></i>
+                    Candidates</a>
+                <a href="#" class="nav-link" data-page="faq-page"><i class="fa-solid fa-circle-info"></i> FAQ</a>
+                <a href="#" class="nav-link" data-page="chat-page"
+                    style="margin-top: 10px; background: rgba(37, 99, 235, 0.2);"><i class="fa-solid fa-robot"></i> AI
+                    Assistant</a>
+                <a href="admin.html" class="nav-link" style="margin-top: 2rem; color: #f59e0b;"><i
+                        class="fa-solid fa-user-shield"></i> Admin Portal</a>
+            </nav>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=Voter&background=2563eb&color=fff" alt="User">
+                <div class="user-info">
+                    <span class="user-name">Welcome, Citizen</span>
+                    <span class="user-id">Status: Registration Active</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard" id="main-content">
+
+            <!-- Timeline Page (Default) -->
+            <div id="timeline-page" class="page-view active-page">
+                <header>
+                    <div class="greeting">
+                        <h1>Election Process Guide</h1>
+                        <p>Understanding your civic duty made simple and interactive.</p>
+                    </div>
+                </header>
+
+                <div class="dashboard-grid">
+                    <div class="balance-card glass-panel"
+                        style="grid-column: 1 / -1; background: rgba(37, 99, 235, 0.1); border-color: var(--primary);">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                            <div>
+                                <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;"><i
+                                        class="fa-solid fa-calendar-check"></i> Next Election: General Elections 2026
+                                </h3>
+                                <p style="color: var(--text-muted); font-size: 0.9rem;">Are you ready to vote? Check the
+                                    timeline below to see where you stand.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="balance-card glass-panel">
+                        <h3>Days Until Election</h3>
+                        <h2 id="days-countdown">124 Days</h2>
+                        <div class="card-footer">
+                            <span class="positive"><i class="fa-solid fa-hourglass-start"></i> Time to prepare!</span>
+                        </div>
+                    </div>
+
+                    <div class="balance-card glass-panel secondary-card">
+                        <h3>Voter Registration</h3>
+                        <h2>Open</h2>
+                        <div class="card-footer">
+                            <span>Closes in 45 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="recent-transactions glass-panel">
+                    <h2>Key Election Steps</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Step Name</th>
+                                    <th>Description</th>
+                                    <th>Deadline/Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="timeline-list">
+                                <tr>
+                                    <td>
+                                        <div class="tx-item">
+                                            <div class="tx-icon-bg positive-bg"><i class="fa-solid fa-user-check"></i>
+                                            </div>
+                                            <span>Check Registration</span>
+                                        </div>
+                                    </td>
+                                    <td>Ensure you are on the electoral rolls.</td>
+                                    <td>May 15, 2026</td>
+                                    <td class="positive">Actionable</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="tx-item">
+                                            <div class="tx-icon-bg"><i class="fa-solid fa-address-card"></i></div>
+                                            <span>Obtain Voter ID</span>
+                                        </div>
+                                    </td>
+                                    <td>Apply or correct details if necessary.</td>
+                                    <td>July 10, 2026</td>
+                                    <td class="positive">Actionable</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="tx-item">
+                                            <div class="tx-icon-bg"><i class="fa-solid fa-box-archive"></i></div>
+                                            <span>Election Day</span>
+                                        </div>
+                                    </td>
+                                    <td>Cast your vote at the designated booth.</td>
+                                    <td>August 24, 2026</td>
+                                    <td class="negative">Upcoming</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Voting Process / Booth Page -->
+            <div id="voting-page" class="page-view" style="display: none;">
+                <header>
+                    <div class="greeting">
+                        <h1>Secure Voting Booth</h1>
+                        <p>Authenticate your identity to cast your ballot.</p>
+                    </div>
+                </header>
+                <div class="dashboard-grid">
+                    <div class="balance-card glass-panel" id="voting-status-card"
+                        style="grid-column: 1 / -1; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+
+                        <div id="identity-unverified" style="text-align: center;">
+                            <i class="fa-solid fa-face-viewfinder"
+                                style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                            <h2 style="margin-bottom: 1rem; color: #fff;">Identity Verification Required</h2>
+                            <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem;">To access the
+                                voting ballot, you must verify your identity using our secure facial identification
+                                process.</p>
+                            <button id="start-auth-btn"
+                                style="background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 600;"><i
+                                    class="fa-solid fa-spinner fa-spin" id="model-loading-spinner"></i> <span
+                                    id="auth-btn-text">Loading ID Models...</span></button>
+                        </div>
+
+                        <div id="identity-verified" style="display: none; width: 100%;">
+                            <div
+                                style="background: var(--positive-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--positive); margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
+                                <i class="fa-solid fa-circle-check"
+                                    style="font-size: 2rem; color: var(--positive);"></i>
+                                <div>
+                                    <h3 style="color: var(--positive); margin: 0;">Identity Verified Securely</h3>
+                                    <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">You may now cast
+                                        your vote. Select a candidate below.</p>
+                                </div>
+                            </div>
+
+                            <h2 style="margin-bottom: 1rem;">Official Ballot</h2>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Candidate</th>
+                                            <th>Party</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ballot-list">
+                                        <!-- Ballot items populate here -->
+                                        <tr>
+                                            <td colspan="3" style="text-align: center; color: var(--text-muted);">
+                                                Loading Ballot...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voter ID Info Page -->
+            <div id="voterid-page" class="page-view" style="display: none;">
+                <header>
+                    <div class="greeting">
+                        <h1>Voter ID Information</h1>
+                        <p>Everything you need to know about your Voter ID.</p>
+                    </div>
+                </header>
+                <div class="dashboard-grid">
+                    <div class="balance-card glass-panel">
+                        <h3>New Registration</h3>
+                        <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.95rem;">Eligible citizens
+                            turning 18 can apply for a new Voter ID online via the National Voter Services Portal
+                            (NVSP).</p>
+                        <button id="register-now-btn" class="action-btn"
+                            style="margin-top: 1.5rem; background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Register
+                            Now</button>
+                    </div>
+                    <div class="balance-card glass-panel">
+                        <h3>Update Details</h3>
+                        <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.95rem;">Need to change your
+                            address or correct a misspelled name? Apply for corrections online.</p>
+                        <button class="action-btn"
+                            style="margin-top: 1.5rem; background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 10px 20px; border-radius: 8px; cursor: pointer;">Update
+                            Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Candidates Page -->
+            <div id="candidates-page" class="page-view" style="display: none;">
+                <header>
+                    <div class="greeting">
+                        <h1>Know Your Candidates</h1>
+                        <p>Information regarding candidates running in your constituency.</p>
+                    </div>
+                </header>
+                <div class="dashboard-grid" id="public-candidates-container">
+                    <!-- Populated via JS -->
+                    <div class="balance-card glass-panel"
+                        style="grid-column: 1 / -1; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;">
+                        <i class="fa-solid fa-users-viewfinder"
+                            style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                        <h3 style="color: #fff; margin-bottom: 0.5rem;">Loading candidates...</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Page -->
+            <div id="faq-page" class="page-view" style="display: none;">
+                <header>
+                    <div class="greeting">
+                        <h1>Frequently Asked Questions</h1>
+                        <p>Common queries about the democratic process.</p>
+                    </div>
+                </header>
+                <section class="recent-transactions glass-panel">
+                    <div style="padding: 1rem;">
+                        <h3 style="color: #fff; margin-bottom: 0.5rem;">Q: What if I lose my Voter ID card?</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">A: You can apply for a duplicate
+                            Voter ID card online. You can also vote using alternative approved photo IDs (like a
+                            passport, driving license, or PAN card) as long as your name is on the electoral roll.</p>
+
+                        <h3 style="color: #fff; margin-bottom: 0.5rem;">Q: Can I vote from another city?</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">A: Usually, you must vote in the
+                            constituency where you are registered. If you moved, you must update your address to
+                            register in your new constituency.</p>
+
+                        <h3 style="color: #fff; margin-bottom: 0.5rem;">Q: Is voting mandatory?</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">A: While highly encouraged as a
+                            civic duty, voting is not legally mandatory in most contexts.</p>
+
+                        <div
+                            style="background: var(--primary-glow); padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin-top: 2rem;">
+                            <p style="color: white; margin: 0;"><i class="fa-solid fa-lightbulb"></i>
+                                <strong>Tip:</strong> If you have more specific questions, just ask the Civic AI
+                                Assistant in the chat!
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Chat Page -->
+            <div id="chat-page" class="page-view"
+                style="display: none; height: 100%; display: flex; flex-direction: column;">
+                <header>
+                    <div class="greeting">
+                        <h1>Civic AI Assistant</h1>
+                        <p>Your interactive guide powered by Gemma 4 / Gemini.</p>
+                    </div>
+                </header>
+
+                <div class="glass-panel"
+                    style="flex: 1; display: flex; flex-direction: column; overflow: hidden; margin-bottom: 2rem;">
+                    <div class="chat-messages" id="chat-messages"
+                        style="flex: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+                        <div class="message ai" style="align-self: flex-start; max-width: 85%;">
+                            <div class="msg-content"
+                                style="background: rgba(255,255,255,0.05); padding: 12px 16px; border-radius: 16px; border-top-left-radius: 4px;">
+                                Hello! I am your Civic AI Assistant (powered by Gemma 4). I can guide you through the
+                                election process, explain your voting rights, or help you find registration steps. How
+                                can I help you today?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area"
+                        style="padding: 1rem; border-top: 1px solid var(--glass-border); display: flex; gap: 8px;">
+                        <input type="text" id="chat-input" placeholder="Ask about elections..."
+                            style="flex: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px 14px; color: white; outline: none;">
+                        <button id="send-btn"
+                            style="background: var(--primary); color: white; border: none; width: 42px; height: 42px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i
+                                class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Face Authentication Modal -->
+        <div class="modal-overlay" id="face-auth-modal">
+            <div class="modal-content glass-panel">
+                <div class="modal-header">
+                    <h2 id="modal-title"><i class="fa-solid fa-face-viewfinder"></i> ID Verification Scanner</h2>
+                </div>
+
+                <div class="modal-body">
+                    <div id="auth-context-container">
+                        <p class="auth-context">Please look directly into the camera to unlock the secure voting booth.
+                        </p>
+                    </div>
+
+                    <div class="camera-wrapper">
+                        <video id="camera-feed" autoplay playsinline muted></video>
+                        <div class="face-outline" id="face-outline">
+                            <div class="scanner-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="auth-status" id="auth-status">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Initiating camera...
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="cancel-btn" id="cancel-auth">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/dist/face-api.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

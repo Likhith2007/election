@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicGuide - Admin Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="login-screen"
+        style="display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; width: 100vw; position: absolute; top: 0; left: 0; z-index: 1000; background: var(--bg-main);">
+        <div class="glass-panel"
+            style="padding: 3rem; text-align: center; border-top: 4px solid var(--primary); width: 100%; max-width: 400px;">
+            <i class="fa-solid fa-lock" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h2>Admin Authentication</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Enter the admin password to proceed.</p>
+            <input type="password" id="admin-password" placeholder="Password"
+                style="margin-bottom: 1rem; width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: white; outline: none; text-align: center; font-size: 1.1rem;">
+            <button id="login-btn"
+                style="width: 100%; padding: 12px; border-radius: 8px; background: var(--primary); color: white; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 500;">Login</button>
+            <p id="login-error" style="color: var(--negative); display: none; margin-top: 1rem; font-size: 0.9rem;">
+                Incorrect Password</p>
+            <a href="index.html"
+                style="display: block; margin-top: 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 0.9rem;"><i
+                    class="fa-solid fa-arrow-left"></i> Return to Live App</a>
+        </div>
+    </div>
+
+    <div class="app-container" id="admin-app" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Admin Portal</span>
+            </div>
+            <nav id="sidebar-nav">
+                <a href="#" class="nav-link active"><i class="fa-solid fa-users"></i> Manage Candidates</a>
+                <a href="index.html" class="nav-link"><i class="fa-solid fa-arrow-left"></i> Back to Live App</a>
+            </nav>
+            <div class="user-profile">
+                <i class="fa-solid fa-user-lock" style="font-size: 2rem; color: var(--primary);"></i>
+                <div class="user-info">
+                    <span class="user-name">System Admin</span>
+                    <span class="user-id">Access: Superuser</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard" id="main-content">
+            <header>
+                <div class="greeting">
+                    <h1>Manage Candidates</h1>
+                    <p>Add and configure candidates for the upcoming election.</p>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="balance-card glass-panel" style="grid-column: 1 / -1;">
+                    <h3 style="margin-bottom: 1rem;"><i class="fa-solid fa-user-plus"></i> Add New Candidate</h3>
+                    <form id="add-candidate-form"
+                        style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <label
+                                style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px; display: block;">Candidate
+                                Name</label>
+                            <input type="text" id="candidate-name" required
+                                style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: white;">
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <label
+                                style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px; display: block;">Political
+                                Party (or Independent)</label>
+                            <input type="text" id="candidate-party" required
+                                style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: white;">
+                        </div>
+                        <button type="submit"
+                            style="background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                            Add Candidate
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <section class="recent-transactions glass-panel">
+                <h2>Registered Candidates</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Party</th>
+                                <th>Votes Received</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-candidates-list">
+                            <!-- Populated dynamically -->
+                            <tr>
+                                <td colspan="3" style="text-align: center; color: var(--text-muted);">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container"></div>
+
+    <script>
+        // Simple Password Protection
+        const ADMIN_PASSWORD = "admin"; // Basic mock password
+
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const pwd = document.getElementById('admin-password').value;
+            if (pwd === ADMIN_PASSWORD) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-app').style.display = 'flex';
+                // initial load
+                loadCandidates();
+                // polling to keep votes updated on admin screen
+                setInterval(loadCandidates, 5000);
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        });
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        async function loadCandidates() {
+            try {
+                const response = await fetch('/api/candidates');
+                if (!response.ok) throw new Error("Failed to fetch");
+                const candidates = await response.json();
+
+                const list = document.getElementById('admin-candidates-list');
+                list.innerHTML = '';
+
+                if (candidates.length === 0) {
+                    list.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--text-muted);">No candidates registered yet.</td></tr>';
+                    return;
+                }
+
+                candidates.forEach(c => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${c.name}</strong></td>
+                        <td>${c.party}</td>
+                        <td class="positive">${c.votes}</td>
+                    `;
+                    list.appendChild(tr);
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        document.getElementById('add-candidate-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('candidate-name').value;
+            const party = document.getElementById('candidate-party').value;
+
+            try {
+                const res = await fetch('/api/candidates', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, party })
+                });
+
+                if (res.ok) {
+                    showToast('Candidate added successfully!');
+                    document.getElementById('candidate-name').value = '';
+                    document.getElementById('candidate-party').value = '';
+                    loadCandidates();
+                } else {
+                    showToast('Failed to add candidate.');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Network error.');
+            }
+        });
+
+    </script>
+</body>
+
+</html>
